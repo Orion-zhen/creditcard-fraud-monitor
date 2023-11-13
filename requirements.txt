@@ -1,6 +1,8 @@
 pandas
 numpy
 matplotlib
-termcolor
+torch
 scikit-learn
 xgboost
+tqdm
+intel_extension_for_pytorch; sys_platform == "linux"
