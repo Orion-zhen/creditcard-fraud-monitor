@@ -30,17 +30,8 @@ if __name__ == "__main__":
             batch_size=args.batch_size,
             lr=args.lr,
             output_path=args.output_path,
+            use_ipex=args.ipex,
         )
-
-        # ipex优化仅在推理时有效
-        model.eval()
-        if args.ipex:
-            try:
-                import intel_extension_for_pytorch as ipex
-
-                model = ipex.optimize(model)
-            except:
-                print("ipex uncapable!")
 
         accuracy = predict(
             model=model,
@@ -48,6 +39,7 @@ if __name__ == "__main__":
             test_dataset=test_dataset,
             batch_size=args.batch_size,
             output_path=args.output_path,
+            use_ipex=args.ipex,
         )
         print(f"Best loss: {best_loss}, Accuracy: {accuracy}")
     

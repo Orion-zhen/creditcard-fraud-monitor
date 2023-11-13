@@ -6,13 +6,21 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 
-def train_dl(model, device, train_dataset, epochs, batch_size, lr, output_path):
+def train_dl(model, device, train_dataset, epochs, batch_size, lr, output_path, use_ipex: bool = False):
     model.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
     loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     model.train()
+    if use_ipex:
+        try:
+            import intel_extension_for_pytorch as ipex
+
+            model, optimizer = ipex.optimize(model, optimizer=optimizer, dtype=torch.float32)
+            model = torch.compile(model, backend="ipex") # 实验性功能
+        except:
+            print("ipex uncapable!")
     best_loss = float("inf")
     for epoch in tqdm(range(epochs), desc="Training", colour="blue"):
         loss = 0
@@ -34,11 +42,19 @@ def train_dl(model, device, train_dataset, epochs, batch_size, lr, output_path):
     return best_loss
 
 
-def predict(model, device, test_dataset, batch_size, output_path):
+def predict(model, device, test_dataset, batch_size, output_path, use_ipex: bool = False):
+    model.eval()
+    if use_ipex:
+        try:
+            import intel_extension_for_pytorch as ipex
+
+            model = ipex.optimize(model)
+            model = torch.compile(model, backend="ipex") # 实验性功能
+        except:
+            print("ipex uncapable!")
+    
     model.load_state_dict(torch.load(os.path.join(output_path, "model.pth")))
     model.to(device)
-    model.eval()
-
     loader = DataLoader(test_dataset, batch_size=batch_size)
 
     correct = 0
