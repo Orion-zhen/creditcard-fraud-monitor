@@ -19,6 +19,7 @@ def train_dl(model, device, train_dataset, epochs, batch_size, lr, output_path, 
 
             model, optimizer = ipex.optimize(model, optimizer=optimizer, dtype=torch.float32)
             model = torch.compile(model, backend="ipex") # 实验性功能
+            print("正使用ipex加速训练🚀")
         except:
             print("ipex uncapable!")
     best_loss = float("inf")
@@ -50,6 +51,7 @@ def predict(model, device, test_dataset, batch_size, output_path, use_ipex: bool
 
             model = ipex.optimize(model)
             model = torch.compile(model, backend="ipex") # 实验性功能
+            print("正使用ipex加速推理🚀")
         except:
             print("ipex uncapable!")
     
