@@ -1,3 +1,4 @@
+import sys
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -7,7 +8,7 @@ parser.add_argument("--epochs", "-e", default=500, type=int, help="训练的轮�
 parser.add_argument("--lr", "-l",default=0.00001, type=float, help="学习率")
 parser.add_argument("--batch-size", "-b",default=16, type=int, help="batch size")
 parser.add_argument("--split", "-s", default=0.8, type=float, help="训练集占比")
-parser.add_argument("--ipex", "-i", action="store_true", default=True, help="是否使用ipex优化(需要安装intel-extension-for-pytorch)")
+parser.add_argument("--ipex", "-i", action="store_true", default=(sys.platform=="linux"), help="是否使用ipex优化(需要安装intel-extension-for-pytorch)")
 parser.add_argument("--device", "-to", default="cpu", help="训练时使用的设备，其中xpu代表intel显卡", choices=["cpu", "cuda", "xpu"])
 parser.add_argument("--output-path", "-o", default="./output", help="输出文件夹")
 
