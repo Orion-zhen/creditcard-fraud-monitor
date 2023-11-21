@@ -6,3 +6,5 @@ scikit-learn==1.2.2
 xgboost
 tqdm
 intel_extension_for_pytorch; sys_platform == "linux"
+scikit-learn-intelex
+modin[all]
