@@ -2,9 +2,7 @@
 
 本项目基于[第 13 代英特尔® 酷睿™ i5 处理器 i5-13600K](https://www.intel.cn/content/www/cn/zh/products/sku/230493/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html)和[英特尔锐炫™ a 系列显卡 A770](https://www.intel.cn/content/www/cn/zh/products/sku/229151/intel-arc-a770-graphics-16gb/specifications.html)编写
 
-在项目中使用了[Intel® Distribution of Modin*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/distribution-of-modin.html)
- 
-[Intel® Extension for PyTorch*](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)
+在项目中使用了[Intel® Distribution of Modin*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/distribution-of-modin.html)、[Intel® Extension for PyTorch*](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)和[Intel® Extension for Scikit-learn* ](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/scikit-learn.html)
 
 使用深度神经网络构建分类器, 可以准确地识别信用卡诈骗情况, 准确率达到 **96.95%** !
 
@@ -22,6 +20,10 @@ cd creditcard-fraud-monitor
 ```shell
 pip install -r requirements.txt
 ```
+
+在[展示文件](./demo.ipynb)中，阅读我们的处理流程并运行演示程序，能帮助您更快速地理解项目
+
+## 进一步探索我们的深度神经网络
 
 如果希望采用intel显卡完成训练和推理, 请运行:
 
