@@ -1,4 +1,14 @@
-# creditcard-fraud-monitor
+# 西安交通大学——网络保安队
+
+## 问题重述
+
+本项目的目标是根据过往的信用卡交易信息，构建反信用卡欺诈交易预测模型，识别一条记录是否为欺诈交易，为信用卡拥有者减少损失。
+
+本质上来说，这是一个二分类问题，但由于样本中正样本的数量极少，也为项目添加了新的挑战。
+
+首相我们采用欠采样的方法解决样本不平衡的问题；之后我们尝试了传统的机器学习模型，也应用了深度神经网络来对交易进行预测，总体来说深度神经网络的效果更好。
+
+## 项目简介
 
 本项目基于[第 13 代英特尔® 酷睿™ i5 处理器 i5-13600K](https://www.intel.cn/content/www/cn/zh/products/sku/230493/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html)和[英特尔锐炫™ a 系列显卡 A770](https://www.intel.cn/content/www/cn/zh/products/sku/229151/intel-arc-a770-graphics-16gb/specifications.html)编写
 
@@ -143,3 +153,9 @@ cuda
 ![eg-cuda](assets/eg-cuda.png)
 
 可以看到, ipex带来了非常可观的准确率提升
+
+## 心得体会
+
+和其他的加速框架相比，Intel的加速框架最显著的特点就是简单易上手，不需要对已经写好的代码进行大范围的改动。
+
+同时优化后的代码效果显著，执行速度有了很可观的提升，不论是对大数据量还是小数据量的内容，都有很好的加速效果。
