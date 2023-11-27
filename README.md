@@ -2,7 +2,7 @@
 
 本项目基于[第 13 代英特尔® 酷睿™ i5 处理器 i5-13600K](https://www.intel.cn/content/www/cn/zh/products/sku/230493/intel-core-i513600k-processor-24m-cache-up-to-5-10-ghz/specifications.html)和[英特尔锐炫™ a 系列显卡 A770](https://www.intel.cn/content/www/cn/zh/products/sku/229151/intel-arc-a770-graphics-16gb/specifications.html)编写
 
-在项目中使用了[Intel® Distribution of Modin*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/distribution-of-modin.html)、[Intel® Extension for PyTorch*](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)和[Intel® Extension for Scikit-learn* ](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/scikit-learn.html)对代码进行加速
+在项目中使用了[Intel® Distribution of Modin*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/distribution-of-modin.html)、[Intel® Extension for PyTorch*](https://pytorch.org/tutorials/recipes/recipes/intel_extension_for_pytorch.html)和[Intel® Extension for Scikit-learn*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/scikit-learn.html)对代码进行加速
 
 使用深度神经网络构建分类器, 可以准确地识别信用卡诈骗情况, 准确率达到 **96.95%** !
 
@@ -48,7 +48,68 @@ python main.py
 
 ## 英特尔®技术
 
-本项目使用了[intel_extension_for_pytorch](https://github.com/intel/intel-extension-for-pytorch)来对pytorch训练和推理进行优化和加速
+### Intel® Distribution of Modin*
+
+本项目使用了[Intel® Distribution of Modin*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/distribution-of-modin.html)来对pandas数据处理进行优化和加速
+
+以数据可视化部分为例，在未使用modin进行优化时，将全部数据装入并绘制分布图所需的时间为2.0s
+
+![eg-pandas](assets/eg-pandas.png)
+
+而在使用modin之后，所需时间仅为1.3s
+
+![eg-modin](assets/eg-modin.png)
+
+modin的使用也十分简单方便
+
+只需将原先的
+
+```python
+import pandas
+```
+
+替换为
+
+```python
+import modin.pandas
+```
+
+即可在无需更改代码的情况下使用modin优化
+
+### Intel® Extension for Scikit-learn*
+
+本项目使用[Intel® Extension for Scikit-learn*](https://www.intel.cn/content/www/cn/zh/developer/tools/oneapi/scikit-learn.html)来对传统机器学习模型进行优化和加速
+
+我们在传统机器学习案例中使用了sklearn支持的以下分类模型：
+
+* 决策树
+* k最近邻居
+* 逻辑斯蒂回归
+* 支持向量机
+* 随机森林
+
+在未使用intel优化之前，执行时间如下所示
+
+![eg-sklearn](assets/eg-sklearn.png)
+
+使用intel优化之后，情况如下所示
+
+![eg-intel-sklearn](assets/eg-intel-sklearn.png)
+
+如果想在代码中使用intel优化后的sklearn，无需对源代码进行逐个修改，仅需在引入sklearn之前作如下操作
+
+```python
+from sklearnex import patch_sklearn
+patch_sklearn()
+```
+
+在函数patch_sklearn()填写需要进行加速的机器学习模型，如果不填写参数的，则默认对所有模型有限使用intel优化后的sklearn
+
+目前，intel可以加速的sklearn模型参考[官方文档](https://www.intel.com/content/www/us/en/developer/tools/oneapi/scikit-learn.html)
+
+### Intel® Extension for PyTorch*
+
+本项目使用[intel_extension_for_pytorch](https://github.com/intel/intel-extension-for-pytorch)来对pytorch训练和推理进行优化和加速
 
 想要使用ipex优化模型训练, 只需要在代码中加入如下几行:
 
